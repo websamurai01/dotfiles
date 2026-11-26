@@ -2,10 +2,9 @@
   "lastChangelogVersion": "1.6.0",
   "theme": "dark",
   "defaultProvider": "openrouter",
-  "defaultModel": "deepseek/deepseek-v4.1-flash-1017",
+  "defaultModel": "moonshotai/kimi-k2.7-code",
   "enabledModels": [
-    "openrouter/deepseek/deepseek-v4.1-flash-1017",
-    "openrouter/z-ai/glm-5.3-flash"
+    "openrouter/deepseek/deepseek-v4.1-flash-1017"
   ],
   "hideThinkingBlock": true,
   "compaction": {
