@@ -49,6 +49,10 @@ hl.bind (
   hl.dsp.exec_cmd(x.terminal) )
 
 hl.bind (
+  "SUPER + SHIFT + Return",
+  hl.dsp.exec_cmd(x.terminal .. " -e " .. x.box_ssh) )
+
+hl.bind (
   "SUPER + D",
   hl.dsp.exec_cmd(x.menu) )
 
