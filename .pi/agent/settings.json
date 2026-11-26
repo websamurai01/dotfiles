@@ -1,0 +1,17 @@
+{
+  "lastChangelogVersion": "1.6.0",
+  "theme": "dark",
+  "defaultProvider": "openrouter",
+  "defaultModel": "deepseek/deepseek-v4.1-flash-1017",
+  "enabledModels": [
+    "openrouter/deepseek/deepseek-v4.1-flash-1017",
+    "openrouter/z-ai/glm-5.3-flash"
+  ],
+  "hideThinkingBlock": true,
+  "compaction": {
+    "enabled": true
+  },
+  "packages": [
+    "git:github.com/google/elephant-goldfish-model"
+  ]
+}
