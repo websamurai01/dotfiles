@@ -7,7 +7,7 @@
         "modules-left": ["hyprland/workspaces"],
         "modules-center": ["hyprland/window"],
         // --- ИЗМЕНИТЕ СТРОКУ НИЖЕ ---
-        "modules-right": ["custom/btc", "custom/ping", "custom/country", "hyprland/language", "pulseaudio", "network", "clock"],
+        "modules-right": ["custom/btc", "custom/spx", "custom/fng", "custom/ping", "custom/country", "hyprland/language", "pulseaudio", "network", "clock"],
     
         // --- ДОБАВЬТЕ НОВЫЕ МОДУЛИ НИЖЕ ---
         "hyprland/language": {
@@ -25,11 +25,27 @@
             "format": " {} ms", // Иконка пинга
             "interval": 1 // Каждую секунду
         },
+        // escape: waybar reads the text as Pango markup, a bare & hides the label
         "custom/btc": {
-            "exec": "~/.config/waybar/scripts/btc_price.sh",
+            "exec": "~/.config/waybar/scripts/market.sh btc",
             "format": "{}",
             "return-type": "json", // Обязательно для работы классов
+            "escape": true,
             "interval": 10 // Каждые 10 секунд
+        },
+        "custom/spx": {
+            "exec": "~/.config/waybar/scripts/market.sh spx",
+            "format": "{}",
+            "return-type": "json",
+            "escape": true,
+            "interval": 60
+        },
+        "custom/fng": {
+            "exec": "~/.config/waybar/scripts/market.sh fng",
+            "format": "{}",
+            "return-type": "json",
+            "escape": true,
+            "interval": 3600
         },
         // --- ДАЛЕЕ ИДУТ ВАШИ СТАРЫЕ МОДУЛИ ---
         "hyprland/workspaces": {

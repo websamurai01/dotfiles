@@ -1,7 +1,8 @@
 /* WAYBAR STYLE.CSS - MINIMALIST AESTHETIC */
 
 * {
-    font-family: "Symbols Nerd Font", "Fixedsys Excelsior 3.01", "Noto Color Emoji", monospace, sans-serif;
+    /* The first family that has the glyph wins. Noto Sans Hebrew keeps niqqud in place. */
+    font-family: "Symbols Nerd Font", "Fixedsys Excelsior 3.01", "Noto Sans Hebrew", "Apple Color Emoji", monospace, sans-serif;
     font-size: 16px;
     min-height: 0;
 }
@@ -40,6 +41,8 @@
 
 /* Global Module Style (С фоном) */
 #custom-btc,
+#custom-spx,
+#custom-fng,
 #custom-ping,
 #custom-weather,
 #hyprland-language,
@@ -53,6 +56,25 @@
     border-radius: 0px;
 }
 
+/* Market tickers: green when up since 00:00 UTC, red when down */
+#custom-btc.up,
+#custom-spx.up,
+#custom-fng.up {
+    color: #4caf50;
+}
+
+#custom-btc.down,
+#custom-spx.down,
+#custom-fng.down {
+    color: #ef5350;
+}
+
+/* The ping text is always six characters wide. The reserved width is insurance
+   for a four digit ping or a different font. Adjust it with font-size. */
+#custom-ping {
+    min-width: 48px;
+}
+
 /* Модули БЕЗ ФОНА */
 #network,
 #custom-country {
@@ -61,6 +83,14 @@
     margin: 0px;
     padding: 1px 3px;
     border-radius: 0px;
+}
+
+/* The flag is the only emoji in the bar. Apple Color Emoji is a bitmap font
+   with strikes at 20, 26, 32, 40, 48, 52, 64, 96 px. At 16px FreeType has to
+   squeeze the 20px strike down, so the flag looks small and soft.
+   Change this one value to pick a size. */
+#custom-country {
+    font-size: 22px;
 }
 
 /* Clock Highlight - BLACK BACKGROUND */

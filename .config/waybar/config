@@ -10,10 +10,12 @@
 
     "modules-left": ["hyprland/workspaces"],
     "modules-center": ["hyprland/window"],
-    "modules-right": ["custom/btc", "custom/country", "hyprland/language", "custom/ping", "custom/weather", "memory", "cpu", "clock"],
+    "modules-right": ["custom/btc", "custom/spx", "custom/fng", "custom/country", "hyprland/language", "custom/ping", "custom/weather", "memory", "cpu", "clock"],
 
     "hyprland/workspaces": {
-      "format": "{}",
+      // {icon} is required. Without this literal token waybar never reads
+      // format-icons, and {} would print the workspace id instead.
+      "format": "{icon}",
       "format-window": "{class} {title}",
       "on-click": "activate",
       "all-outputs": true,
@@ -21,31 +23,55 @@
         "HDMI-A-1": [1, 2, 3],
         "DP-1": [4, 5, 6]
       },
+      // Hebrew names of the digits, with niqqud. The keys stay the workspace numbers.
+      // No active or default keys. The active workspace must show its own name,
+      // not a dot, and the highlight is drawn by CSS on button.active.
       "format-icons": {
-        "1": "1",
-        "2": "2",
-        "3": "3",
-        "4": "4",
-        "5": "5",
-        "6": "6",
-        "active": "●",
-        "default": "○"
+        "1": "אֶחָד",
+        "2": "שְׁנַיִם",
+        "3": "שְׁלֹשָׁה",
+        "4": "אַרְבָּעָה",
+        "5": "חֲמִשָּׁה",
+        "6": "שִׁשָּׁה"
       }
     },
 
-    "hyprland/window": { "format": "{}" },
+    // Center module: the app name only. The full window title stays in the tooltip.
+    "hyprland/window": { "format": "{class}" },
 
-    // BTC PRICE (10 SECONDS UPDATE)
+    // MARKET TICKERS
+    // Each module prints its own JSON line. The class up or down sets the color.
+    // The change is measured since 00:00 UTC. The S&P 500 does not trade then,
+    // so it shows the change since the last close.
+    // escape: true is needed because waybar reads the text as Pango markup.
+    // A bare & in S&P or F&G stops the parse and the label stays empty.
     "custom/btc": {
-      "exec": "~/.config/waybar/scripts/btc_price.sh",
+      "exec": "~/.config/waybar/scripts/market.sh btc",
       "interval": 10,
-      "format": "{}"
+      "format": "{}",
+      "escape": true,
+      "return-type": "json"
+    },
+    "custom/spx": {
+      "exec": "~/.config/waybar/scripts/market.sh spx",
+      "interval": 60,
+      "format": "{}",
+      "escape": true,
+      "return-type": "json"
+    },
+    "custom/fng": {
+      "exec": "~/.config/waybar/scripts/market.sh fng",
+      "interval": 3600,
+      "format": "{}",
+      "escape": true,
+      "return-type": "json"
     },
     "custom/ping": {
-      "exec": "ping -c 1 -W 1 185.25.182.1 | grep -oP 'time=\\K[0-9.]+' | cut -d '.' -f 1",
+      // The number is padded to three places, so the text length never changes.
+      // On a failed ping the module prints --- instead of hiding, so the bar keeps its layout.
+      "exec": "ping -c 1 -W 1 185.25.182.1 | grep -oP 'time=\\K[0-9.]+' | cut -d '.' -f 1 | awk '{printf \"%3s\", $1} END {if (NR == 0) printf \"---\"}'",
       "format": "{} ms",
-      "interval": 1,
-      "exec-if": "ping -c 1 -W 1 185.25.182.1"
+      "interval": 1
     },
     // COUNTRY FLAG (5 SECONDS UPDATE)
     "custom/country": {
@@ -61,9 +87,14 @@
       "format": "{text}"
     },
 
+    // Layout names: EN, RU, HE. The key suffix is the xkb short name of the layout
+    // (en, ru, he), not its long name.
     "hyprland/language": {
       "format": "{}",
-      "format-lang": "{short}"
+      "format-en": "EN",
+      "format-ru": "RU",
+      "format-he": "HE",
+      "tooltip-format": "{long}"
     },
 
     // ИСПРАВЛЕНИЕ: Формат для MEMORY: RAM удален, установлен формат GB
@@ -97,8 +128,9 @@
       "cpu",
       "clock"
     ],
+    "hyprland/window": { "format": "{class}" },
     "hyprland/workspaces": {
-      "format": "{}",
+      "format": "{icon}",
       "format-window": "{class} {title}",
       "on-click": "activate",
       "all-outputs": true,
@@ -107,14 +139,12 @@
         "DP-1": [4, 5, 6]
       },
       "format-icons": {
-        "1": "1",
-        "2": "2",
-        "3": "3",
-        "4": "4",
-        "5": "5",
-        "6": "6",
-        "active": "●",
-        "default": "○"
+        "1": "אֶחָד",
+        "2": "שְׁנַיִם",
+        "3": "שְׁלֹשָׁה",
+        "4": "אַרְבָּעָה",
+        "5": "חֲמִשָּׁה",
+        "6": "שִׁשָּׁה"
       }
     }
   }
